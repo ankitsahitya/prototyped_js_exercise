@@ -29,20 +29,20 @@ WebPage.pageLoaded.prototype= {
 	},
 	sliderCarousel:function(){
 	  setInterval(nextSlide, 8000);
-	  $("#previous").click(function(){
+	  $("#slider #previous").click(function(){
 	  	nextSlide();
 	  });
-	  $("#next").click(function(){
+	  $("#slider #next").click(function(){
 	  	nextSlide();
 	  });
 	  function nextSlide(){
-	  	$("#slide1").attr("style","display:none");
-		  $("#slide2").attr("style","display:none");
+	  	$("#slider #slide1").attr("style","display:none");
+		  $("#slider #slide2").attr("style","display:none");
 		  if(index%2 == 0){
-		  	$("#slide1").attr("style","display:block");
+		  	$("#slider #slide1").attr("style","display:block");
 		  } 
 		  else{
-		  	$("#slide2").attr("style","display:block");
+		  	$("#slider #slide2").attr("style","display:block");
 		  }
 		  index++;
 	  }
