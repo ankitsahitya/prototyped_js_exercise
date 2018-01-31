@@ -23,26 +23,28 @@ WebPage.pageLoaded.prototype= {
 	},
 	handleSliderCarousel:function(){
 		var index = 0;
-	  setInterval(nextSlide, 8000);
+		var self = this;
+	  setInterval(function(){self.nextSlide(index);index++}, 8000);
 	  $("#slider #previous").click(function(){
-	  	nextSlide();
+	  	self.nextSlide(index);
+	  	index++;
 	  });
 	  $("#slider #next").click(function(){
-	  	nextSlide();
+	  	self.nextSlide(index);
+	  	index++;
 	  });
-	  function nextSlide(){
-	  	$("#slider #slide1").attr("style","display:none");
-		  $("#slider #slide2").attr("style","display:none");
-		  console.log(index);
-		  if(index%2 == 0){
-		  	$("#slider #slide1").attr("style","display:block");
-		  } 
-		  else{
-		  	$("#slider #slide2").attr("style","display:block");
-		  }
-		  index++;
-	  }
 	},
+	nextSlide:function(index){
+		console.log(index);
+  	$("#slider #slide1").attr("style","display:none");
+	  $("#slider #slide2").attr("style","display:none");
+	  if(index%2 == 0){
+	  	$("#slider #slide1").attr("style","display:block");
+	  } 
+	  else{
+	  	$("#slider #slide2").attr("style","display:block");
+	  }
+  },
 	handleNavigationHideShow:function(){
 		$("#header .icon").click(function(){
 			var navigation = document.getElementById("topnav");
@@ -55,53 +57,54 @@ WebPage.pageLoaded.prototype= {
 		});
 	},
 	handleBlockHideShow:function(){
+		var self = this;
 		$("#topnav #home-link").click(function(){
-			openBlockByName('home');
+			self.openBlockByName('home');
 		});
 		$("#topnav #example-link").click(function(){
-			openBlockByName('example');
+			self.openBlockByName('example');
 		});
 		$("#topnav #feedback-link").click(function(){
-			openBlockByName('feedback');
+			self.openBlockByName('feedback');
 		});
 		$("#topnav #image-effect-link").click(function(){
-			openBlockByName('image-effect');
+			self.openBlockByName('image-effect');
 		});
 		$("#topnav #contact-us-link").click(function(){
-			openBlockByName('contact-us');
+			self.openBlockByName('contact-us');
 		});
 		$("#welcome-links #img-introduction").click(function(){
-			openBlockByName('home');
+			self.openBlockByName('home');
 		});
 		$("#welcome-links #img-example").click(function(){
-			openBlockByName('example');
+			self.openBlockByName('example');
 		});
 		$("#welcome-links #img-image-effect").click(function(){
-			openBlockByName('image-effect');
+			self.openBlockByName('image-effect');
 		});
 		$("#welcome-links #img-contact-us").click(function(){
-			openBlockByName('contact-us');
+			self.openBlockByName('contact-us');
 		});
-		function openBlockByName(blockName){
-			if(blockName == "home" || blockName == "example"){
-				$("#main-body #right-block").attr("style", "display:block");
-			}
-			else{
-				$("#main-body #right-block").attr("style", "display:none");
-			}
-			$("#topnav #home-link").removeClass("active");
-			$("#topnav #example-link").removeClass("active");
-			$("#topnav #feedback-link").removeClass("active");
-			$("#topnav #image-effect-link").removeClass("active");
-			$("#topnav #contact-us-link").removeClass("active");
-			$("#topnav #"+blockName+"-link").addClass("active");
-			$("#main-body #home").attr("style", "display:none");
-			$("#main-body #example").attr("style", "display:none");
-			$("#main-body #feedback").attr("style", "display:none");
-			$("#main-body #image-effect").attr("style", "display:none");
-			$("#main-body #contact-us").attr("style", "display:none");
-			$("#main-body #"+blockName).attr("style", "display:block");
+	},
+	openBlockByName:function(blockName){
+		if(blockName == "home" || blockName == "example"){
+			$("#main-body #right-block").attr("style", "display:block");
 		}
+		else{
+			$("#main-body #right-block").attr("style", "display:none");
+		}
+		$("#topnav #home-link").removeClass("active");
+		$("#topnav #example-link").removeClass("active");
+		$("#topnav #feedback-link").removeClass("active");
+		$("#topnav #image-effect-link").removeClass("active");
+		$("#topnav #contact-us-link").removeClass("active");
+		$("#topnav #"+blockName+"-link").addClass("active");
+		$("#main-body #home").attr("style", "display:none");
+		$("#main-body #example").attr("style", "display:none");
+		$("#main-body #feedback").attr("style", "display:none");
+		$("#main-body #image-effect").attr("style", "display:none");
+		$("#main-body #contact-us").attr("style", "display:none");
+		$("#main-body #"+blockName).attr("style", "display:block");
 	},
 	handleImageGlowEffect:function(){
 		var count = 0;
@@ -147,7 +150,7 @@ WebPage.pageLoaded.prototype= {
 		$(".modal-content #submit-comment").click(function(){
 			commenter = $(".modal-content #commenter").val();
 			comment = $(".modal-content #comment").val();
-			if(commenter != null && comment != null){
+			if(commenter != "" && comment != ""){
 				var row = '<tr><td> ' + i + ' </td> <td> ' + commenter + ' </td> <td>' + comment + '</td></tr>';
 			  $("#feedback #comments").append(row);
 			  i++;
@@ -156,26 +159,27 @@ WebPage.pageLoaded.prototype= {
 		});
 	},
 	handleScrollEffect:function(){
+		var self = this;
 		$(document).scroll(function(){
 			$("#welcome-links").each(function(){
-				if(isScrolledIntoView(this) && $(this).css('display')!='none'){
+				if(self.isScrolledIntoView(this) && $(this).css('display')!='none'){
         	$("#welcome-links img").attr("style","display:block;");
        	}
 			});
 			$("#container").each(function(){
-				if(isScrolledIntoView(this) && $(this).css('display')!='none'){
+				if(self.isScrolledIntoView(this) && $(this).css('display')!='none'){
         	$("#container").attr("style","display:block;");
         	$("#welcome").attr("style","display:none;");
 					$("#welcome-links").attr("style","display:none;");
        	}
 			});
 		});
-	  function isScrolledIntoView(elem){
-    	var docViewTop = $(document).scrollTop();
-   		var docViewBottom = docViewTop + $(document).height();
-   		var elemTop = $(elem).offset().top;
-   		var elemBottom = elemTop + $(elem).height();
-   		return (elemTop <= docViewBottom-elemBottom+500)
-	  }
 	},
+	isScrolledIntoView:function(elem){
+  	var docViewTop = $(document).scrollTop();
+ 		var docViewBottom = docViewTop + $(document).height();
+ 		var elemTop = $(elem).offset().top;
+ 		var elemBottom = elemTop + $(elem).height();
+ 		return (elemTop <= docViewBottom-elemBottom+500)
+  },
 }
