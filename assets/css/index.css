@@ -860,6 +860,10 @@ footer h4{
   box-sizing: border-box;
   resize: vertical;
 }
+.error {
+  box-shadow: 0 0 5px red;
+}
+
 #modal label {
   padding: 12px 12px 12px 0;
   display: inline-block;

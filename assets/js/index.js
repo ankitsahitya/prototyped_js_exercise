@@ -22,7 +22,7 @@ WebPage.pageLoaded.prototype= {
 		$("#main-body #contact-us").attr("style", "display:none");
 	},
 	handleSliderCarousel:function(){
-		var index = 0;
+		var index = 1;
 		var self = this;
 	  setInterval(function(){self.nextSlide(index);index++}, 8000);
 	  $("#slider #previous").click(function(){
@@ -35,7 +35,6 @@ WebPage.pageLoaded.prototype= {
 	  });
 	},
 	nextSlide:function(index){
-		console.log(index);
   	$("#slider #slide1").attr("style","display:none");
 	  $("#slider #slide2").attr("style","display:none");
 	  if(index%2 == 0){
@@ -148,6 +147,8 @@ WebPage.pageLoaded.prototype= {
 	handleAddCommentEvent:function(){
 		var i=1;
 		$(".modal-content #submit-comment").click(function(){
+			$(".modal-content #comment").removeClass("error");
+			$(".modal-content #commenter").removeClass("error");
 			commenter = $(".modal-content #commenter").val();
 			comment = $(".modal-content #comment").val();
 			if(commenter != "" && comment != ""){
@@ -155,6 +156,14 @@ WebPage.pageLoaded.prototype= {
 			  $("#feedback #comments").append(row);
 			  i++;
 			  $("#modal").attr("style","display:none;");
+			}
+			else{
+				if(commenter == ""){
+					$(".modal-content #commenter").addClass("error");
+				}
+				if(comment == ""){
+					$(".modal-content #comment").addClass("error");
+				}
 			}
 		});
 	},
