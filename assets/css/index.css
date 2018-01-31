@@ -710,6 +710,7 @@ h4{
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
   line-height: 1.25;
+  text-decoration: none;
   margin-top: 0;
   border: 1px solid #ddd; 
 }
